@@ -107,18 +107,17 @@ function onSubmit() {
   if (isEdit.length > 0) {
     arreglo[floor].forEach((item) => {
       if (item.name === isEdit) {
-        var divTag = document.getElementById("point_" + item.name);
-        divTag.style.left = document.getElementById("posX").value - 20 + "px";
-        divTag.style.top = document.getElementById("posY").value - 20 + "px";
-        var color = Object.keys(colors).find((color) => color === value);
-        (divTag.style.backgroundColor = colors[color]
-          (
-          (item.x = parseInt(document.getElementById("posX").value))
-        )),
+        (item.x = parseInt(document.getElementById("posX").value)),
           (item.y = parseInt(document.getElementById("posY").value)),
           (item.type = value),
           (item.service = val.length > 0 ? val : null),
           (item.nodes = nodes.length > 0 ? nodes : null);
+          
+        var divTag = document.getElementById("point_" + item.name);
+        divTag.style.left = document.getElementById("posX").value - 20 + "px";
+        divTag.style.top = document.getElementById("posY").value - 20 + "px";
+        var color = Object.keys(colors).find((color) => color === value);
+        divTag.style.backgroundColor = colors[color];
       }
     });
   } else {
