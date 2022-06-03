@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css.css">
+<body>
+
+
+
+    <img id="img" src="./blueprints/P-01.jpg" onclick="onclickimg(event)" />
+
+
+    <div class="list" >
+        Lista de creados: 
+        <ul id="list">
+
+          </ul>  
+
+
+          <button onclick="prevImages()">Prev.</button>
+          <button onclick="nextImages()">Next</button>
+          <button onclick="showArrOnConsole()">Show array</button>
+    </div>
+
+    <div class="form">
+        <div class="form-item">
+            
+            <label for="id">ID: </label>
+            <input id="id_node" disabled />
+            </div>
+        <div class="form-item">
+            
+            <label for="floor">Piso: </label>
+            <input id="floor" />
+            </div>
+        <div class="form-item">
+            
+        <label for="posX">X: </label>
+        <input id="posX" />
+        </div>
+        <div class="form-item">
+        <label for="posX">Y: </label>
+        <input id="posY" />
+
+    </div>
+    <div class="form-item">
+        <label for="service">service: </label>
+        <input id="service" />
+    </div>
+    <div class="form-item">
+        <label for="id_nodes">nodes: </label>
+        <input id="id_nodes" />
+    </div>
+    <div class="form-item">
+        <label for="posX">Tipo: </label>
+        <select name="type" id="type">
+            <option value="hallway">hallway</option>
+            <option value="bathroom">bathroom</option>
+            <option value="stairs">stairs</option>
+            <option value="stairsUp">stairsUp</option>
+            <option value="stairsDown">stairsDown</option>
+            <option value="elevator">elevator</option>
+            <option value="exit">exit</option>
+            <option value="entrance">entrance</option>
+            <option value="entranceAndExit">entranceAndExit</option>
+          </select>
+    </div>
+    <button onclick="onSubmit()">Add</button>
+    <button onclick="cancel()">Cancel</button>
+    </div>
+    <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>

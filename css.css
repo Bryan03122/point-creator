@@ -1,0 +1,46 @@
+.form{
+    background-color: white;
+    border: 1px solid black;
+    position: fixed;
+    right: 0;
+    top: 0;
+    padding: 25px 10px;
+}
+
+.form-item{
+    display: flex;
+}
+input{
+    width: 100%;
+}
+
+.list{
+    background-color: white;
+    border: 1px solid black;
+    position: fixed;
+    top: 0;
+    padding: 25px 10px;
+    max-height: 500px;
+    overflow: auto;
+}
+
+.pointOnMap{
+    cursor: pointer;
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    /* background-color: red; */
+    z-index: 1;
+    color: white;
+    
+}
+
+.text{
+    /* display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 4px;
+}
