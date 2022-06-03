@@ -213,3 +213,48 @@ function cancel() {
 function showArrOnConsole() {
   console.log(arreglo);
 }
+
+function saveOnLocalStorage() {
+  localStorage.setItem("arrayStore", JSON.stringify(arreglo))
+  alert('saved');
+}
+
+function loadFromLocalStorage() {
+  arreglo = JSON.parse(localStorage.getItem("arrayStore"))
+  Object.keys(arreglo).forEach(key => {
+    arreglo[key].forEach(item => {
+      var liTag = document.createElement("li");
+    liTag.id = item.name;
+    liTag.innerHTML =
+    item.name +
+      `<button onclick='edit("` +
+      item.name +
+      `","` +
+      key +
+      `")'>Editar</button> <button onclick='remove("` +
+      item.name +
+      `","` +
+      key +
+      `")'>Remove</button>`;
+
+    document.getElementById("list").appendChild(liTag);
+    var divTag = document.createElement("div");
+    divTag.className = "pointOnMap";
+    divTag.style.left = item.x - 20 + "px";
+    divTag.style.top = item.y - 20 + "px";
+    divTag.onclick = function () {
+      appendNode(item.name);
+    };
+
+    var color = Object.keys(colors).find((color)=>color === item.type)
+    divTag.style.backgroundColor = colors[color]
+    console.log(color)
+    divTag.id = "point_" + item.name;
+    var text = document.createElement("p");
+    text.className = "text"
+    text.innerHTML = item.name
+    divTag.appendChild(text)
+    document.getElementsByTagName("body")[0].appendChild(divTag);
+    })
+  })
+}
