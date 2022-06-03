@@ -13,16 +13,16 @@ var arrServices = [
 ];
 
 var colors = {
-  "hallway": "#eb4034",
-  "bathroom": "#7734eb",
-  "stairs": "#34c6eb",
-  "stairsUp": "#34ebdc",
-  "stairsDown": "#3489eb",
-  "elevator": "#34eb7d",
-  "exit": "#eb8634",
-  "entrance": "#eb3474",
-  "entranceAndExit": "#eb34d0",
-}
+  hallway: "#eb4034",
+  bathroom: "#7734eb",
+  stairs: "#34c6eb",
+  stairsUp: "#34ebdc",
+  stairsDown: "#3489eb",
+  elevator: "#34eb7d",
+  exit: "#eb8634",
+  entrance: "#eb3474",
+  entranceAndExit: "#eb34d0",
+};
 
 var index = 0;
 var lastIndex = 0;
@@ -107,10 +107,14 @@ function onSubmit() {
   if (isEdit.length > 0) {
     arreglo[floor].forEach((item) => {
       if (item.name === isEdit) {
-        var divTag = document.getElementById("point_" + item.name);        
+        var divTag = document.getElementById("point_" + item.name);
         divTag.style.left = document.getElementById("posX").value - 20 + "px";
         divTag.style.top = document.getElementById("posY").value - 20 + "px";
-        (item.x = parseInt(document.getElementById("posX").value)),
+        var color = Object.keys(colors).find((color) => color === value);
+        (divTag.style.backgroundColor = colors[color]
+          (
+          (item.x = parseInt(document.getElementById("posX").value))
+        )),
           (item.y = parseInt(document.getElementById("posY").value)),
           (item.type = value),
           (item.service = val.length > 0 ? val : null),
@@ -149,14 +153,13 @@ function onSubmit() {
       appendNode(name);
     };
 
-    var color = Object.keys(colors).find((color)=>color === value)
-    divTag.style.backgroundColor = colors[color]
-    console.log(color)
+    var color = Object.keys(colors).find((color) => color === value);
+    divTag.style.backgroundColor = colors[color];
     divTag.id = "point_" + name;
     var text = document.createElement("p");
-    text.className = "text"
-    text.innerHTML = name
-    divTag.appendChild(text)
+    text.className = "text";
+    text.innerHTML = name;
+    divTag.appendChild(text);
     document.getElementsByTagName("body")[0].appendChild(divTag);
   }
 
