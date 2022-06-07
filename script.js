@@ -13,16 +13,16 @@ var arrServices = [
 ];
 
 var colors = {
-  "hallway": "#eb4034",
-  "bathroom": "#7734eb",
-  "stairs": "#34c6eb",
-  "stairsUp": "#34ebdc",
-  "stairsDown": "#3489eb",
-  "elevator": "#34eb7d",
-  "exit": "#eb8634",
-  "entrance": "#eb3474",
-  "entranceAndExit": "#eb34d0",
-}
+  hallway: "#eb4034",
+  bathroom: "#7734eb",
+  stairs: "#34c6eb",
+  stairsUp: "#34ebdc",
+  stairsDown: "#3489eb",
+  elevator: "#34eb7d",
+  exit: "#eb8634",
+  entrance: "#eb3474",
+  entranceAndExit: "#eb34d0",
+};
 
 var index = 0;
 var lastIndex = 0;
@@ -107,7 +107,7 @@ function onSubmit() {
   if (isEdit.length > 0) {
     arreglo[floor].forEach((item) => {
       if (item.name === isEdit) {
-        var divTag = document.getElementById("point_" + item.name);        
+        var divTag = document.getElementById("point_" + item.name);
         divTag.style.left = document.getElementById("posX").value - 20 + "px";
         divTag.style.top = document.getElementById("posY").value - 20 + "px";
         (item.x = parseInt(document.getElementById("posX").value)),
@@ -149,14 +149,14 @@ function onSubmit() {
       appendNode(name);
     };
 
-    var color = Object.keys(colors).find((color)=>color === value)
-    divTag.style.backgroundColor = colors[color]
-    console.log(color)
+    var color = Object.keys(colors).find((color) => color === value);
+    divTag.style.backgroundColor = colors[color];
+    console.log(color);
     divTag.id = "point_" + name;
     var text = document.createElement("p");
-    text.className = "text"
-    text.innerHTML = name
-    divTag.appendChild(text)
+    text.className = "text";
+    text.innerHTML = name;
+    divTag.appendChild(text);
     document.getElementsByTagName("body")[0].appendChild(divTag);
   }
 
@@ -215,46 +215,85 @@ function showArrOnConsole() {
 }
 
 function saveOnLocalStorage() {
-  localStorage.setItem("arrayStore", JSON.stringify(arreglo))
-  alert('saved');
+  localStorage.setItem("arrayStore", JSON.stringify(arreglo));
+  alert("saved");
+}
+
+function getOnlyNames() {
+  let arrayAux = [];
+  Object.keys(arreglo).forEach((key) => {
+    arreglo[key].forEach((item) => {
+      arrayAux.push(item.name);
+    });
+  });
+  console.log(arrayAux);
+}
+
+function getRelation() {
+  let objectAux = {};
+  let arrayAux = [];
+  Object.keys(arreglo).forEach((key) => {
+    arreglo[key].forEach((item) => {
+      objectAux[item.name] = {};
+      if (item.nodes) {
+        arrayAux = item.nodes.split(",");
+        arrayAux.forEach((aux) => {
+          let nodeEnd = arreglo[key].find((nodeEnd) => nodeEnd.name === aux);
+          if (nodeEnd) {
+            let distance = Math.sqrt(
+              Math.pow(item.x - nodeEnd.x, 2) + Math.pow(item.y - nodeEnd.y, 2)
+            ).toFixed(2);
+            objectAux[item.name][aux] = distance;
+          } else {
+            objectAux[item.name][aux] = 0;
+          }
+        });
+      }
+    });
+  });
+  console.log(objectAux);
 }
 
 function loadFromLocalStorage() {
-  arreglo = JSON.parse(localStorage.getItem("arrayStore"))
-  Object.keys(arreglo).forEach(key => {
-    arreglo[key].forEach(item => {
+  arreglo = JSON.parse(localStorage.getItem("arrayStore"));
+  let last_name = "";
+  Object.keys(arreglo).forEach((key) => {
+    arreglo[key].forEach((item) => {
       var liTag = document.createElement("li");
-    liTag.id = item.name;
-    liTag.innerHTML =
-    item.name +
-      `<button onclick='edit("` +
-      item.name +
-      `","` +
-      key +
-      `")'>Editar</button> <button onclick='remove("` +
-      item.name +
-      `","` +
-      key +
-      `")'>Remove</button>`;
+      liTag.id = item.name;
+      liTag.innerHTML =
+        item.name +
+        `<button onclick='edit("` +
+        item.name +
+        `","` +
+        key +
+        `")'>Editar</button> <button onclick='remove("` +
+        item.name +
+        `","` +
+        key +
+        `")'>Remove</button>`;
 
-    document.getElementById("list").appendChild(liTag);
-    var divTag = document.createElement("div");
-    divTag.className = "pointOnMap";
-    divTag.style.left = item.x - 20 + "px";
-    divTag.style.top = item.y - 20 + "px";
-    divTag.onclick = function () {
-      appendNode(item.name);
-    };
+      document.getElementById("list").appendChild(liTag);
+      var divTag = document.createElement("div");
+      divTag.className = "pointOnMap";
+      divTag.style.left = item.x - 20 + "px";
+      divTag.style.top = item.y - 20 + "px";
+      divTag.onclick = function () {
+        appendNode(item.name);
+      };
 
-    var color = Object.keys(colors).find((color)=>color === item.type)
-    divTag.style.backgroundColor = colors[color]
-    console.log(color)
-    divTag.id = "point_" + item.name;
-    var text = document.createElement("p");
-    text.className = "text"
-    text.innerHTML = item.name
-    divTag.appendChild(text)
-    document.getElementsByTagName("body")[0].appendChild(divTag);
-    })
-  })
+      var color = Object.keys(colors).find((color) => color === item.type);
+      divTag.style.backgroundColor = colors[color];
+      console.log(color);
+      last_name = item.name;
+      divTag.id = "point_" + item.name;
+      var text = document.createElement("p");
+      text.className = "text";
+      text.innerHTML = item.name;
+      divTag.appendChild(text);
+      document.getElementsByTagName("body")[0].appendChild(divTag);
+    });
+  });
+  let arrName = last_name.split("_");
+  lastIndex = parseInt(arrName[arrName.length - 1]) + 1;
 }
