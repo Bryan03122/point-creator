@@ -115,6 +115,12 @@ function onSubmit() {
           (item.type = value),
           (item.service = val.length > 0 ? val : null),
           (item.nodes = nodes.length > 0 ? nodes : null);
+
+        var divTag = document.getElementById("point_" + item.name);
+        divTag.style.left = document.getElementById("posX").value - 20 + "px";
+        divTag.style.top = document.getElementById("posY").value - 20 + "px";
+        var color = Object.keys(colors).find((color) => color === value);
+        divTag.style.backgroundColor = colors[color];
       }
     });
   } else {
@@ -128,6 +134,7 @@ function onSubmit() {
     });
     var liTag = document.createElement("li");
     liTag.id = name;
+
     liTag.innerHTML =
       name +
       `<button onclick='edit("` +
@@ -146,7 +153,13 @@ function onSubmit() {
     divTag.style.left = document.getElementById("posX").value - 20 + "px";
     divTag.style.top = document.getElementById("posY").value - 20 + "px";
     divTag.onclick = function () {
-      appendNode(name);
+      var isEdit = document.getElementById("id_node").value;
+      var floor = document.getElementById("floor").value;      
+      if (isEdit != 0) {
+        appendNode(name);
+      } else {
+        edit(divTag.id.split("point_")[1], floor);
+      }
     };
 
     var color = Object.keys(colors).find((color) => color === value);
@@ -187,7 +200,7 @@ function remove(id, floor) {
   document.getElementById("point_" + id).remove();
 }
 
-function edit(id, floor) {
+function edit(id, floor) {  
   arreglo[floor].forEach((item) => {
     if (item.name === id) {
       document.getElementById("id_node").value = id;
@@ -272,20 +285,24 @@ function loadFromLocalStorage() {
         `","` +
         key +
         `")'>Remove</button>`;
-
+      last_name = item.name
       document.getElementById("list").appendChild(liTag);
       var divTag = document.createElement("div");
       divTag.className = "pointOnMap";
       divTag.style.left = item.x - 20 + "px";
       divTag.style.top = item.y - 20 + "px";
       divTag.onclick = function () {
+        var isEdit = document.getElementById("id_node").value;
+      var floor = document.getElementById("floor").value;      
+      if (isEdit != 0) {
         appendNode(item.name);
+      } else {
+        edit(divTag.id.split("point_")[1], floor);
+      }
       };
 
       var color = Object.keys(colors).find((color) => color === item.type);
-      divTag.style.backgroundColor = colors[color];
-      console.log(color);
-      last_name = item.name;
+      divTag.style.backgroundColor = colors[color];      
       divTag.id = "point_" + item.name;
       var text = document.createElement("p");
       text.className = "text";
